@@ -114,17 +114,57 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, args):
-        """ Create an object of any class"""
+        """ Create an object of any class
+        create <Class name> <param 1> <param 2> <param 3>...
+        """
         if not args:
             print("** class name missing **")
             return
-        elif args not in HBNBCommand.classes:
+        # Split the input to separate the class name and parameters
+        cmd_words = args.split()
+
+        # get the class name
+        class_name = cmd_words[0]
+
+        if class_name not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-        new_instance = HBNBCommand.classes[args]()
+        new_instance = HBNBCommand.classes[class_name]()
+        # get parameters
+        parameters = cmd_words[1:]
+        # print for test
+        # print(f"Class Name: {class_name}")
+        # print(f"Parameters: {parameters}")
+
+        # Iterate through parameters
+        for parameter in parameters:
+            # Split parameter into key and value
+            key_value = parameter.split('=')
+            if len(key_value) != 2:
+                continue
+            key, value = key_value
+
+            try:
+                # Handle different value types
+                if value.startswith('"') and value.endswith('"'):
+                    # String value
+                    value = value[1:-1]  # Remove quotes
+                    # Handle escape characters and replace underscores with spaces
+                    value = value.replace('\\"', '"').replace('_', ' ')
+                elif '.' in value:
+                    # Float value
+                    value = float(value)
+                else:
+                    # Integer value
+                    value = int(value)
+                setattr(new_instance, key, value)
+                # Print for verification (you can remove this in the final version)
+                # print(f"Key: {key}, Value: {value}")
+            except ValueError:
+                continue
+        # new_instance = class_obj()
         storage.save()
         print(new_instance.id)
-        storage.save()
 
     def help_create(self):
         """ Help information for the create method """
