@@ -73,7 +73,7 @@ class HBNBCommand(cmd.Cmd):
                 pline = pline[2].strip()  # pline is now str
                 if pline:
                     # check for *args or **kwargs
-                    if pline[0] is '{' and pline[-1] is'}'\
+                    if pline[0] is '{' and pline[-1] is '}'\
                             and type(eval(pline)) is dict:
                         _args = pline
                     else:
@@ -149,7 +149,7 @@ class HBNBCommand(cmd.Cmd):
                 if value.startswith('"') and value.endswith('"'):
                     # String value
                     value = value[1:-1]  # Remove quotes
-                    # Handle escape characters and replace underscores with spaces
+                    # Handle escape characters,replace underscores with spaces
                     value = value.replace('\\"', '"').replace('_', ' ')
                 elif '.' in value:
                     # Float value
@@ -158,7 +158,7 @@ class HBNBCommand(cmd.Cmd):
                     # Integer value
                     value = int(value)
                 setattr(new_instance, key, value)
-                # Print for verification (you can remove this in the final version)
+                # Print for verification
                 # print(f"Key: {key}, Value: {value}")
             except ValueError:
                 continue
@@ -227,7 +227,7 @@ class HBNBCommand(cmd.Cmd):
         key = c_name + "." + c_id
 
         try:
-            del(storage.all()[key])
+            del (storage.all()[key])
             storage.save()
         except KeyError:
             print("** no instance found **")
@@ -359,6 +359,7 @@ class HBNBCommand(cmd.Cmd):
         """ Help information for the update class """
         print("Updates an object with new information")
         print("Usage: update <className> <id> <attName> <attVal>\n")
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
