@@ -1,12 +1,13 @@
 #!/usr/bin/python3
 """This module defines a class to manage file storage for hbnb clone"""
+from models.base_model import BaseModel, Base
 from models.user import User
 from models.place import Place
 from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.review import Review
-from models.base_model import BaseModel, Base
+
 from sqlalchemy import (create_engine)
 from sqlalchemy.orm import sessionmaker, scoped_session
 from os import getenv
@@ -33,7 +34,11 @@ class DBStorage:
 
     def all(self, cls=None):
         """Returns a dictionary of models currently in storage"""
-        classes = [User, Place, State, City, Amenity, Review]
+        classes = {
+               'BaseModel': BaseModel, 'User': User, 'Place': Place,
+               'State': State, 'City': City, 'Amenity': Amenity,
+               'Review': Review
+              }
         temp_dict = {}
         if cls:
             objects = self.__session.query(classes[cls]).all()
@@ -57,6 +62,9 @@ class DBStorage:
 
     def reload(self):
         """Loads storage dictionary from file"""
+        Base.metadata.create_all(self.__engine)
+        sessions = sessionmaker(bind=self.__engine, expire_on_commit=False)
+        self.__session = scoped_session(sessions)
 
     def delete(self, obj=None):
         """ delete obj from __objects if it’s inside
