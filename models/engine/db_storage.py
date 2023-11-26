@@ -28,9 +28,10 @@ class DBStorage:
                                       pool_pre_ping=True)
         if getenv('HBNB_ENV') == 'test':
             Base.metadata.drop_all(bind=self.__engine)
+        # Base.metadata.create_all(self.__engine)
         Base.metadata.create_all(self.__engine)
-        self.__session = scoped_session(sessionmaker(bind=self.__engine,
-                                                     expire_on_commit=False))
+        """# self.__session = scoped_session(sessionmaker(bind=self.__engine,
+        #                                             # expire_on_commit=False))"""
 
     def all(self, cls=None):
         """Returns a dictionary of models currently in storage"""
