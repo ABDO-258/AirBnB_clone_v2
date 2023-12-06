@@ -27,8 +27,8 @@ sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
 sudo chown -R ubuntu:ubuntu /data/
 
 # Check if the hbnb_static location block already exists before adding it
-if ! grep -q "location = \/hbnb_static {" /etc/nginx/sites-available/default; then
-    sed -i '/^}$/i \ \n\talias \/data\/web_static\/current\/hbnb_static\/;\n\t}' "/etc/nginx/sites-available/default"
+if ! grep -q "location \/hbnb_static {" /etc/nginx/sites-available/default; then
+    sudo sed -i '/server_name _;/a location /hbnb_static { alias /data/web_static/current/;}' /etc/nginx/sites-available/default
 fi
 
 sudo service nginx restart
