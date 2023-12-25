@@ -35,10 +35,10 @@ class FileStorage:
         """Returns a dictionary of models currently in storage"""
         temp_dict = {}
         if cls:
-            if type(cls) == str:
+            if type(cls) is str:
                 cls = eval(cls)
             for key, value in FileStorage.__objects.items():
-                if type(value) == cls:
+                if type(value) is cls:
                     temp_dict[key] = value
             return temp_dict
         else:
@@ -59,8 +59,6 @@ class FileStorage:
 
     def reload(self):
         """Loads storage dictionary from file"""
-        
-
         classes = {
                     'BaseModel': BaseModel, 'User': User, 'Place': Place,
                     'State': State, 'City': City, 'Amenity': Amenity,
