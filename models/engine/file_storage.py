@@ -1,6 +1,13 @@
 #!/usr/bin/python3
 """This module defines a class to manage file storage for hbnb clone"""
 import json
+from models.base_model import BaseModel
+from models.user import User
+from models.place import Place
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.review import Review
 
 
 class FileStorage:
@@ -8,13 +15,30 @@ class FileStorage:
     __file_path = 'file.json'
     __objects = {}
 
+    @property
+    def cities(self):
+        """Retruns Cities in state"""
+
+    def delete(self, obj=None):
+        """loop through __objects, compare each value
+        of key with cls argument wich is object
+        """
+        if obj:
+            id = obj.to_dict()["id"]
+            className = obj.to_dict()["__class__"]
+            keyName = className+"."+id
+            if keyName in FileStorage.__objects:
+                del (FileStorage.__objects[keyName])
+                self.save()
+
     def all(self, cls=None):
         """Returns a dictionary of models currently in storage"""
         temp_dict = {}
         if cls:
-            class_name = cls.__name__
+            if type(cls) == str:
+                cls = eval(cls)
             for key, value in FileStorage.__objects.items():
-                if key.split('.')[0] == class_name:
+                if type(value) == cls:
                     temp_dict[key] = value
             return temp_dict
         else:
@@ -35,13 +59,7 @@ class FileStorage:
 
     def reload(self):
         """Loads storage dictionary from file"""
-        from models.base_model import BaseModel
-        from models.user import User
-        from models.place import Place
-        from models.state import State
-        from models.city import City
-        from models.amenity import Amenity
-        from models.review import Review
+        
 
         classes = {
                     'BaseModel': BaseModel, 'User': User, 'Place': Place,
@@ -57,15 +75,6 @@ class FileStorage:
         except FileNotFoundError:
             pass
 
-    def delete(self, obj=None):
-        """ delete obj from __objects if it’s inside
-            if obj is equal to None, the method should not do anything"""
-        if obj is None:
-            return
-        elif obj:
-            key = (f"{obj.__class__.__name__}.{obj.id}")
-            del self.__objects[key]
-    
     def close(self):
         """ call reload() method for deserializing the JSON file to objects"""
         self.reload()
