@@ -41,8 +41,12 @@ class DBStorage:
                'Review': Review
               }
         temp_dict = {}
+        """
         if cls:
-            objects = self.__session.query(classes[cls]).all()
+            objects = self.__session.query(classes[cls]).all()"""
+        if cls:
+            class_name = cls.__name__
+            objects = self.__session.query(classes[class_name]).all()
         else:
             all_classes = list(classes.values())
             objects = []
@@ -74,3 +78,7 @@ class DBStorage:
             return
         elif obj:
             self.__session.delete(obj)
+
+    def close(self):
+        """ """
+        self.__session.close()

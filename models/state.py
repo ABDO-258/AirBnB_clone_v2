@@ -18,8 +18,10 @@ class State(BaseModel, Base):
     # For FileStorage
     else:
         name = ""
+
         @property
         def cities(self):
+            """ return list of city """
             from models import storage
             city_list = []
             for city in storage.all("City").values():
