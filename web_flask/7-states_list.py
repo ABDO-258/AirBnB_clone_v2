@@ -17,7 +17,7 @@ def HBNB_states_list():
 
 
 @app.teardown_appcontext
-def teardown_app():
+def teardown_app(self, exception=None):
     """ remove the current SQLAlchemy Session """
     storage.close()
 

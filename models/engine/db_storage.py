@@ -43,8 +43,9 @@ class DBStorage:
         if cls:
             objects = self.__session.query(classes[cls]).all()"""
         if cls:
-            class_name = cls.__name__
-            objects = self.__session.query(classes[class_name]).all()
+            if type(cls) is str:
+                cls = eval(cls)
+            objects = self.__session.query(cls).all()
         else:
             all_classes = list(classes.values())
             objects = []
