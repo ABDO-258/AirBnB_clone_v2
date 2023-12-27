@@ -14,6 +14,9 @@ def HBNB_states_list():
     """
     states = storage.all(State)
     print(states)
+    for state_id, state in states.items():
+        print(f"State: {state_id}, Cities: {state.cities}")
+        
     return render_template('7-states_list.html', states=states)
 
 
