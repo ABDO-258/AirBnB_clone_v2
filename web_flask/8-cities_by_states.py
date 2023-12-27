@@ -13,11 +13,7 @@ def HBNB_states_list():
     display a HTML page with the list of all State objects in DBStorage
     """
     states = storage.all(State)
-    print(states)
-    for state_id, state in states.items():
-        print(f"State: {state_id}, Cities: {state.cities}")
-        
-    return render_template('7-states_list.html', states=states)
+    return render_template('8-cities_by_states.html', states=states)
 
 
 @app.teardown_appcontext
