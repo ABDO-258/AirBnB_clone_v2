@@ -39,6 +39,7 @@
 }
 
 .popover {
+	position:relative;
 	list-style-type: none;
 	display: none;
 	background-color: #FAFAFA;
@@ -53,6 +54,7 @@
 
 	border: 1px solid #DDDDDD;
 	border-radius: 4px;
+	padding-left: 40px
 }
 
 .locations:hover .popover {
@@ -71,6 +73,7 @@ ul {
 	list-style-type: none;
 	padding: 0px;
 	padding-bottom: 20px;
+	padding-left: 42px
 }
 
 	
