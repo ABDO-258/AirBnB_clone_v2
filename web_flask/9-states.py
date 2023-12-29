@@ -23,8 +23,6 @@ def HBNB_states_id(id):
     """
     states = storage.all('State')
     for state in states.values():
-        print(state)
-        print(type(state))
         if state.id == id:
             return render_template('9-states.html', states_id=state)
     return render_template('9-states.html', state_id=None)
